@@ -1,3 +1,6 @@
+// Grab the search-btn
+
+
 // creating showAllProducts function
 const showAllProducts = () => {
     fetch(`https://openapi.programming-hero.com/api/phones`)
@@ -8,8 +11,9 @@ const showAllProducts = () => {
 // showing data function
 const showingData = (phones) => {
     const productContainer = document.getElementById("products-row");
+    productContainer.innerHTML = "";
     let i;
-    for (i = 0; i <= 20; i++) {
+    for (i = 0; i < 15; i++) {
         const {
             brand,
             image,
@@ -37,3 +41,18 @@ const showingData = (phones) => {
 
     }
 }
+
+// search handler
+const handleSearch = () => {
+    const inputText = document.getElementById("search-input");
+    const searchText = inputText.value;
+    fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
+        .then(res => res.json())
+        .then(data => showingData(data.data))
+    inputText.value = "";
+}
+
+
+// Grab the search-btn and adding eventlistener
+const searchBtn = document.getElementById("search-btn");
+searchBtn.addEventListener('click', handleSearch);
