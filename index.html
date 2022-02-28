@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
-<body>
+<body onload="showAllProducts()">
     <!-- Navbar start -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
@@ -33,11 +33,11 @@
         <section class="search-box-container container my-5">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-6">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Brand Name"
+                    <div class="col-lg-6 col-10">
+                        <div class="input-group mb-3 search-box">
+                            <input type="text" class="form-control search-input" placeholder="Brand Name"
                                 aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <button class="btn btn-success outline-none px-4" type="button"
+                            <button class="btn btn-success outline-none px-4 search-btn" type="button"
                                 id="button-addon2">Search</button>
                         </div>
                     </div>
@@ -51,48 +51,9 @@
 
             <!-- All products -->
             <div id="products-container">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-6 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional
-                                        content.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional
-                                        content.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional
-                                        content.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional
-                                        content.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
+                <div class=" container">
+                    <div class="row justify-content-center" id="products-row">
+
                     </div>
                 </div>
             </div>
