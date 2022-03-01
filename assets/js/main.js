@@ -6,11 +6,7 @@ const showingData = (phones) => {
 
     if (phones.length > 0) {
         let productLength;
-        if (phones.length > 20) {
-            productLength = 20;
-        } else {
-            productLength = phones.length;
-        }
+        phones.length > 20 ? productLength = 20 : productLength = phones.length;
         let i;
         for (i = 0; i < productLength; i++) {
             const {
@@ -26,9 +22,9 @@ const showingData = (phones) => {
             const element = `
                 <div class = "card py-4 shadow-sm">
                     <div class = "card-body">
-                        <img class="d-block mx-auto img-fluid" src=${image} alt="phone-picture"/>
-                        <h5 class = "card-title mt-4"> ${phone_name} </h5> 
-                        <p class = "card-text text-muted"> Brand: <span> ${brand} </span>
+                        <img class="d-block mx-auto img-fluid" src=${image} alt="not available"/>
+                        <h5 class = "card-title mt-4"> ${phone_name || 'not available'} </h5> 
+                        <p class = "card-text text-muted"> Brand: <span> ${brand || 'not available'} </span>
                         </p>
                         <button  class = "btn btn-success" onclick="handleCardBtn('${slug}')" data-bs-target="#staticBackdrop" data-bs-toggle="modal"> See Details </button> 
                     </div>
@@ -53,9 +49,11 @@ const showingData = (phones) => {
 const handleSearch = () => {
     const inputText = document.getElementById("search-input");
     const searchText = inputText.value;
-    fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
-        .then(res => res.json())
-        .then(data => showingData(data.data))
+    if (searchText.length > 0) {
+        fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
+            .then(res => res.json())
+            .then(data => showingData(data.data))
+    }
     inputText.value = "";
 }
 
@@ -77,11 +75,11 @@ const singlePhoneInfo = (data) => {
     const element = `
         <div class="row justify-content-center align-items-center">
             <div class="col-10 col-md-4 me-sm-5">
-                <img class="mx-auto d-block " src=${image} alt="">
+                <img class="mx-auto d-block " src=${image} alt="Not Availablee">
             </div>
             <div class="col-10 col-md-6 mt-5 mt-md-0">
-                <h3 class=" fw-bolder fs-2 mb-3">${name}</h3>
-                <h6 class="text-muted fw-5">Brand: ${brand}</h6>
+                <h3 class=" fw-bolder fs-2 mb-3">${name || 'Not Available'}</h3>
+                <h6 class="text-muted fw-5">Brand: ${brand || 'Not Available'}</h6>
                 <p class="fs-6 text-muted"><span>${releaseDate||'No Release Date'}</span></p>
             </div>
         </div>
@@ -100,10 +98,10 @@ const singlePhoneInfo = (data) => {
     const listGroup = document.createElement('div');
     const list = `
     <ul class="list-group">
-        <li class="list-group-item"><strong>Chipset:</strong> ${chipSet}</li>
-        <li class="list-group-item"><strong>Display:</strong> ${displaySize}</li>
-        <li class="list-group-item"><strong>Memory:</strong> ${memory}</li>
-        <li class="list-group-item"><strong>Stroage:</strong> ${storage}</li>
+        <li class="list-group-item"><strong>Chipset:</strong> ${chipSet || 'not available'}</li>
+        <li class="list-group-item"><strong>Display:</strong> ${displaySize || 'not available'}</li>
+        <li class="list-group-item"><strong>Memory:</strong> ${memory || 'not available'}</li>
+        <li class="list-group-item"><strong>Stroage:</strong> ${storage || 'not available'}</li>
         <li class="list-group-item">
             <strong class="text-capitalize mb-3">Sensors:</strong>
             <ul id="sensors-part"></ul>
@@ -118,11 +116,16 @@ const singlePhoneInfo = (data) => {
     // Third Part-> Sensors
     const sensorUl = document.getElementById('sensors-part');
     sensorUl.innerHTML = '';
-    sensors.forEach(value => {
-        const li = document.createElement('li');
-        li.innerText = value;
-        sensorUl.appendChild(li);
-    })
+    if (sensors == undefined || sensors.length == 0) {
+        sensorUl.innerHTML = "not avilable";
+    } else {
+        sensors.forEach(value => {
+            const li = document.createElement('li');
+            li.innerText = value;
+            sensorUl.appendChild(li);
+        })
+    }
+
 
     // fourth-> Others features
     const otherFeatureCol = document.getElementById("other-feature-part");
@@ -143,17 +146,15 @@ const singlePhoneInfo = (data) => {
         const otherListGroup = document.createElement('div');
         const ohterList = `
         <ul class="list-group">
-            <li class="list-group-item"><strong>Blutooth:</strong> ${Bluetooth}</li>
-            <li class="list-group-item"><strong>GPS:</strong> ${GPS}</li>
-            <li class="list-group-item"><strong>NFC:</strong> ${NFC}</li>
-            <li class="list-group-item"><strong>Radio:</strong> ${Radio}</li>
-            <li class="list-group-item"><strong>USB:</strong> ${USB}</li>
-            <li class="list-group-item"><strong>WLAN:</strong> ${WLAN}</li>
+            <li class="list-group-item"><strong>Blutooth:</strong> ${Bluetooth || 'not available'}</li>
+            <li class="list-group-item"><strong>GPS:</strong> ${GPS || 'not available'}</li>
+            <li class="list-group-item"><strong>NFC:</strong> ${NFC || 'not available'}</li>
+            <li class="list-group-item"><strong>Radio:</strong> ${Radio || 'not available'}</li>
+            <li class="list-group-item"><strong>USB:</strong> ${USB || 'not available'}</li>
+            <li class="list-group-item"><strong>WLAN:</strong> ${WLAN || 'not available'}</li>
         </ul>
         `;
         otherListGroup.innerHTML = ohterList;
-        // const otherFeatureCol = document.getElementById("other-feature-part");
-        // otherFeatureCol.innerHTML = '';
         otherFeatureCol.appendChild(otherListGroup);
     }
 }
