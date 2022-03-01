@@ -5,8 +5,14 @@ const showingData = (phones) => {
     productContainer.innerHTML = "";
 
     if (phones.length > 0) {
+        let productLength;
+        if (phones.length > 20) {
+            productLength = 20;
+        } else {
+            productLength = phones.length;
+        }
         let i;
-        for (i = 0; i < 20; i++) {
+        for (i = 0; i < productLength; i++) {
             const {
                 brand,
                 image,
@@ -18,15 +24,15 @@ const showingData = (phones) => {
             const div = document.createElement('div');
             div.setAttribute("class", "col-lg-4 col-md-6 col-sm-6 col-10 mb-4 rounded");
             const element = `
-        <div class = "card py-4 shadow-sm">
-            <div class = "card-body">
-                <img class="d-block mx-auto img-fluid" src=${image} alt="phone-picture"/>
-                <h5 class = "card-title mt-4"> ${phone_name} </h5> 
-                <p class = "card-text text-muted"> Brand: <span> ${brand} </span>
-                </p>
-                <button  class = "btn btn-success" onclick="handleCardBtn('${slug}')" data-bs-target="#staticBackdrop" data-bs-toggle="modal"> See Details </button> 
-            </div>
-        </div>     
+                <div class = "card py-4 shadow-sm">
+                    <div class = "card-body">
+                        <img class="d-block mx-auto img-fluid" src=${image} alt="phone-picture"/>
+                        <h5 class = "card-title mt-4"> ${phone_name} </h5> 
+                        <p class = "card-text text-muted"> Brand: <span> ${brand} </span>
+                        </p>
+                        <button  class = "btn btn-success" onclick="handleCardBtn('${slug}')" data-bs-target="#staticBackdrop" data-bs-toggle="modal"> See Details </button> 
+                    </div>
+                </div>     
         `;
 
             div.innerHTML = element;
