@@ -63,7 +63,6 @@ const singlePhoneInfo = (data) => {
         mainFeatures,
         name,
         releaseDate,
-        slug,
         others
     } = data;
 
@@ -120,30 +119,37 @@ const singlePhoneInfo = (data) => {
     })
 
     // fourth-> Others features
-    const {
-        Bluetooth,
-        GPS,
-        NFC,
-        Radio,
-        USB,
-        WLAN
-    } = others;
-
-    const otherListGroup = document.createElement('div');
-    const ohterList = `
-    <ul class="list-group">
-        <li class="list-group-item"><strong>Blutooth:</strong> ${Bluetooth}</li>
-        <li class="list-group-item"><strong>GPS:</strong> ${GPS}</li>
-        <li class="list-group-item"><strong>NFC:</strong> ${NFC}</li>
-        <li class="list-group-item"><strong>Radio:</strong> ${Radio}</li>
-        <li class="list-group-item"><strong>USB:</strong> ${USB}</li>
-        <li class="list-group-item"><strong>WLAN:</strong> ${WLAN}</li>
-    </ul>
-    `;
-    otherListGroup.innerHTML = ohterList;
     const otherFeatureCol = document.getElementById("other-feature-part");
     otherFeatureCol.innerHTML = '';
-    otherFeatureCol.appendChild(otherListGroup);
+    if (others == undefined) {
+        otherFeatureCol.innerHTML = `
+        <h5 class='text-center text-muted'>There is no features information</h5>
+        `
+    } else {
+        const {
+            Bluetooth,
+            GPS,
+            NFC,
+            Radio,
+            USB,
+            WLAN
+        } = others;
+        const otherListGroup = document.createElement('div');
+        const ohterList = `
+        <ul class="list-group">
+            <li class="list-group-item"><strong>Blutooth:</strong> ${Bluetooth}</li>
+            <li class="list-group-item"><strong>GPS:</strong> ${GPS}</li>
+            <li class="list-group-item"><strong>NFC:</strong> ${NFC}</li>
+            <li class="list-group-item"><strong>Radio:</strong> ${Radio}</li>
+            <li class="list-group-item"><strong>USB:</strong> ${USB}</li>
+            <li class="list-group-item"><strong>WLAN:</strong> ${WLAN}</li>
+        </ul>
+        `;
+        otherListGroup.innerHTML = ohterList;
+        // const otherFeatureCol = document.getElementById("other-feature-part");
+        // otherFeatureCol.innerHTML = '';
+        otherFeatureCol.appendChild(otherListGroup);
+    }
 }
 
 
