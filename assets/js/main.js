@@ -1,5 +1,3 @@
-// Grab the search-btn
-
 
 // creating showAllProducts function
 const showAllProducts = () => {
@@ -18,7 +16,8 @@ const singlePhoneInfo = (data) => {
         mainFeatures,
         name,
         releaseDate,
-        slug
+        slug,
+        others
     } = data;
 
     // showing data
@@ -35,10 +34,68 @@ const singlePhoneInfo = (data) => {
             </div>
         </div>
         `;
-
     div.innerHTML = element;
     modalBody.appendChild(div);
 
+    // second part-> Main Features
+    const {
+        chipSet,
+        displaySize,
+        memory,
+        sensors,
+        storage
+    } = mainFeatures;
+    const listGroup = document.createElement('div');
+    const list = `
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Chipset:</strong> ${chipSet}</li>
+        <li class="list-group-item"><strong>Display:</strong> ${displaySize}</li>
+        <li class="list-group-item"><strong>Memory:</strong> ${memory}</li>
+        <li class="list-group-item"><strong>Stroage:</strong> ${storage}</li>
+        <li class="list-group-item">
+            <strong class="text-capitalize mb-3">Sensors:</strong>
+            <ul id="sensors-part"></ul>
+        </li>
+    </ul>
+    `;
+    listGroup.innerHTML = list;
+    const mainFeatureCol = document.getElementById("main-features-part");
+    mainFeatureCol.innerHTML = '';
+    mainFeatureCol.appendChild(listGroup);
+
+    // Third Part-> Sensors
+    const sensorUl = document.getElementById('sensors-part');
+    sensorUl.innerHTML = '';
+    sensors.forEach(value => {
+        const li = document.createElement('li');
+        li.innerText = value;
+        sensorUl.appendChild(li);
+    })
+
+    // fourth-> Others features
+    const {
+        Bluetooth,
+        GPS,
+        NFC,
+        Radio,
+        USB,
+        WLAN
+    } = others;
+    const otherListGroup = document.createElement('div');
+    const ohterList = `
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Blutooth:</strong> ${Bluetooth}</li>
+        <li class="list-group-item"><strong>GPS:</strong> ${GPS}</li>
+        <li class="list-group-item"><strong>NFC:</strong> ${NFC}</li>
+        <li class="list-group-item"><strong>Radio:</strong> ${Radio}</li>
+        <li class="list-group-item"><strong>USB:</strong> ${USB}</li>
+        <li class="list-group-item"><strong>WLAN:</strong> ${WLAN}</li>
+    </ul>
+    `;
+    otherListGroup.innerHTML = ohterList;
+    const otherFeatureCol = document.getElementById("other-feature-part");
+    otherFeatureCol.innerHTML = '';
+    otherFeatureCol.appendChild(otherListGroup);
 }
 const handleCardBtn = (slug) => {
     fetch(`https://openapi.programming-hero.com/api/phone/${slug}`)
@@ -55,7 +112,7 @@ const showingData = (phones) => {
 
     if (phones.length > 0) {
         let i;
-        for (i = 0; i < 15; i++) {
+        for (i = 0; i < 20; i++) {
             const {
                 brand,
                 image,
