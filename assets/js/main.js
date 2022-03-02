@@ -1,10 +1,22 @@
 // function for appending new element
 const addingNewElement = (ID, content) => {
     const targetElement = document.getElementById(ID);
-    targetElement.innerHTML = ""
+    targetElement.innerHTML = "";
     targetElement.appendChild(content);
 }
 
+// function to show list-items
+const showListItems = (values, targetElement) => {
+    const ul = document.createElement('ul');
+    ul.setAttribute('class', 'list-group');
+    for (const item in values) {
+        const list = document.createElement('li');
+        list.classList.add('list-group-item');
+        list.innerHTML = `<strong class="text-capitalize">${item}:</strong> ${values[item]||'not available'}`;
+        ul.appendChild(list);
+    }
+    targetElement.appendChild(ul);
+}
 
 // function for showing fetch data
 const showingData = (phones) => {
@@ -66,10 +78,9 @@ const handleSearch = () => {
     inputText.value = "";
 }
 
-
 // function for showing data in a modal
 const singlePhoneInfo = (data) => {
-
+    // destructuring
     const {
         brand,
         image,
@@ -79,7 +90,7 @@ const singlePhoneInfo = (data) => {
         others
     } = data;
 
-    // first part-> showing basic info
+    // first part-> showing basic info =====
     const div = document.createElement('div');
     const element = `
         <div class="row justify-content-center align-items-center">
@@ -93,111 +104,68 @@ const singlePhoneInfo = (data) => {
             </div>
         </div>
         `;
-
     div.innerHTML = element;
     // append element
     addingNewElement("phone-modal-body", div);
 
-    // second part-> Main Features
+    // second part-> showing main Features ====
     const mainFeatureCol = document.getElementById("main-features-part");
     mainFeatureCol.innerHTML = "";
 
-    // const {
-    //     chipSet,
-    //     displaySize,
-    //     memory,
-    //     sensors,
-    //     storage
-    // } = mainFeatures;
-    // const listGroup = document.createElement('div');
-    // const list = `
-    // <ul class="list-group">
+    // checking 
+    if (mainFeatures == undefined) {
+        mainFeatureCol.innerHTML = `
+        <h5 class='text-center text-muted'>There is no features information</h5>
+        `
+    } else {
+        // showing all the list items
+        showListItems(mainFeatures, mainFeatureCol);
 
-    // </ul>
-    // `;
-    // listGroup.innerHTML = list;
-    showListItems(mainFeatures, mainFeatureCol);
+        // to show sensors
+        const targetLI = mainFeatureCol.children[0].lastElementChild;;
+        targetLI.innerHTML = "";
+        showSensorInfo(targetLI, mainFeatures);
+    }
 
-    // append element
-    // addingNewElement("main-features-part", listGroup);
-
-
-    // Third Part-> Sensors +++++
-    // const sensorUl = document.getElementById('sensors-part');
-    // sensorUl.innerHTML = '';
-    // if (sensors == undefined || sensors.length == 0) {
-    //     sensorUl.innerHTML = "not avilable";
-    // } else {
-    //     sensors.forEach(value => {
-    //         const li = document.createElement('li');
-    //         li.innerText = value;
-    //         sensorUl.appendChild(li);
-    //     })
-    // }
-
-    // fourth-> Others features
+    // third-> showing Others features =====
     const otherFeatureCol = document.getElementById("other-feature-part");
     otherFeatureCol.innerHTML = '';
+
     if (others == undefined) {
         otherFeatureCol.innerHTML = `
         <h5 class='text-center text-muted'>There is no features information</h5>
         `
     } else {
-        // const {
-        //     Bluetooth,
-        //     GPS,
-        //     NFC,
-        //     Radio,
-        //     USB,
-        //     WLAN
-        // } = others;
-        // console.log(others);
-        // const otherListGroup = document.createElement('div');
-        // const ohterList = `
-        // <ul class="list-group">
-        //     <li class="list-group-item"><strong>Blutooth:</strong> ${Bluetooth || 'not available'}</li>
-        //     <li class="list-group-item"><strong>GPS:</strong> ${GPS || 'not available'}</li>
-        //     <li class="list-group-item"><strong>NFC:</strong> ${NFC || 'not available'}</li>
-        //     <li class="list-group-item"><strong>Radio:</strong> ${Radio || 'not available'}</li>
-        //     <li class="list-group-item"><strong>USB:</strong> ${USB || 'not available'}</li>
-        //     <li class="list-group-item"><strong>WLAN:</strong> ${WLAN || 'not available'}</li>
-        // </ul>
-        // `;
-        // otherListGroup.innerHTML = ohterList;
-
-
-        // const ul = document.createElement('ul');
-        // ul.setAttribute('class', 'list-group');
-        // for (const item in others) {
-        //     console.log(others[item]);
-        //     const list = document.createElement('li');
-        //     list.classList.add('list-group-item');
-        //     list.innerHTML = `<strong class="text-capitalize">${item}:</strong> ${others[item]||'not available'}`;
-        //     ul.appendChild(list);
-        // }
+        // showing list items
         showListItems(others, otherFeatureCol);
-
-        // otherFeatureCol.appendChild(ul);
-
-
-        // otherFeatureCol.appendChild(otherListGroup);
     }
 }
 
-// function to show list-items
-const showListItems = (values, targetElement) => {
-    const ul = document.createElement('ul');
-    ul.setAttribute('class', 'list-group');
-    for (const item in values) {
-        const list = document.createElement('li');
-        list.classList.add('list-group-item');
-        list.innerHTML = `<strong class="text-capitalize">${item}:</strong> ${values[item]||'not available'}`;
-        ul.appendChild(list);
+// function to show sensors info
+const showSensorInfo = (targetLI, data) => {
+    const {
+        sensors
+    } = data;
+
+    if (sensors == undefined || sensors.length == 0) {
+        targetLI.innerHTML = `<strong class="text-capitalize">sensors:</strong> Not available`;
+    } else {
+        const div = document.createElement('div');
+        const strong = document.createElement('strong');
+        strong.innerText = 'Sensors:';
+        div.appendChild(strong);
+
+        const ul = document.createElement('ul');
+        strong.classList.add('text-capitalize');
+        sensors.forEach(value => {
+            const li = document.createElement('li');
+            li.innerHTML = value;
+            ul.appendChild(li);
+        })
+        div.appendChild(ul);
+        targetLI.appendChild(div);
     }
-    targetElement.appendChild(ul);
 }
-
-
 
 // 1.to show products on page load
 const showAllProducts = () => {
